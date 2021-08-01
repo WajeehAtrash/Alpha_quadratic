@@ -13,21 +13,36 @@ input()
 #drone movment
 TelloDrone.takeoff()
 #(left_righ,for_back,up_down,Yaw)
-TelloDrone.send_rc_control(0,0,10,0)#moving up
-sleep(2)
-TelloDrone.send_rc_control(20,0,0,0)#moving rgiht
-sleep(2)
-TelloDrone.rotate_counter_clockwise(30)#rotating 30 degree counter clock wise
-sleep(2)
-TelloDrone.rotate_clockwise(30)#rotating 30 degree
-sleep(2)
-TelloDrone.send_rc_control(-40,0,0,0)#moving left
-sleep(2)
-TelloDrone.rotate_clockwise(30)#rotating 30 degree
-sleep(2)
-TelloDrone.rotate_counter_clockwise(30)#rotating 30 degree counter clock wise
-sleep(2)
-TelloDrone.send_rc_control(20,0,0,0)
+TelloDrone.send_rc_control(0,0,50,0)#moving up
+sleep(4)
+# TelloDrone.send_rc_control(20,0,0,0)#moving rgiht
+# sleep(2)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree counter clock wise
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree counter clock wiseTelloDrone.rotate_clockwise(60)#rotating 30 degree
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree
+sleep(4)
 TelloDrone.land()
+
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree counter clock wise
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree counter clock wise
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree counter clock wise
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree counter clock wise
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree counter clock wise
+sleep(4)
+TelloDrone.rotate_clockwise(45)#rotating 30 degree counter clock wise
+sleep(4)
 TelloDrone.streamoff()
 print("done")
