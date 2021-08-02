@@ -14,7 +14,7 @@ input()
 TelloDrone.takeoff()
 #(left_righ,for_back,up_down,Yaw)
 TelloDrone.send_rc_control(0,0,30,0)#moving up
-for i in range(18):
+for i in range(19):
     TelloDrone.rotate_clockwise(20)
     sleep(3)
 TelloDrone.streamoff()
