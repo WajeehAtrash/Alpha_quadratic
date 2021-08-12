@@ -19,9 +19,15 @@ print("run ORB_SLAM2")
 run_Orbslam=threading.Thread(target=run_slam)
 run_Orbslam.start()
 #drone movment
+TelloDrone.send_rc_control(0,0,0,0)
 TelloDrone.takeoff()
-TelloDrone.move_up(70)
-for i in range(19):
+TelloDrone.move_up(80)
+# sleep(5)ove_up(80)
+# TelloDrone.move_back(20)
+# sleep(5)
+# TelloDrone.move_forward(20)
+sleep(5)
+for i in range(18):
     # img=TelloDrone.get_frame_read().frame
     # img=cv2.resize((img,(640,480)))
     # cv2.imshow("drone view",img)
