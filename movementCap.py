@@ -22,21 +22,21 @@ run_Orbslam.start()
 TelloDrone.send_rc_control(0,0,0,0)
 TelloDrone.takeoff()
 TelloDrone.move_up(80)
-# sleep(5)ove_up(80)
+sleep(3)
 # TelloDrone.move_back(20)
 # sleep(5)
 # TelloDrone.move_forward(20)
-sleep(5)
-for i in range(18):
-    # img=TelloDrone.get_frame_read().frame
-    # img=cv2.resize((img,(640,480)))
-    # cv2.imshow("drone view",img)
-    # cv2.waitKey(1)
+for i in range(19):
     TelloDrone.rotate_clockwise(20)
+    sleep(3)
+    TelloDrone.move_up(20)
+    sleep(3)
+    TelloDrone.move_down(20)
     sleep(5)
 TelloDrone.land()
 TelloDrone.streamoff()
 print("done")
+print("Drone Battery:",TelloDrone.get_battery())
 run_Orbslam.join()
 
 
