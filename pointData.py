@@ -1,5 +1,49 @@
+# import math
+# import  numpy as np
+# x,y,z =np.loadtxt('/home/wajeeh/pointData.csv',unpack=True,delimiter=',')
+# # print( type(x))
+# # print( len(x))
+# hull=np.column_stack((x,z))
+#
+#
+# def mostfar(j, n, s, c, mx, my): # advance j to extreme point
+#     xn, yn = hull[j][0], hull[j][1]
+#     rx, ry = xn*c - yn*s, xn*s + yn*c
+#     best = mx*rx + my*ry
+#     while True:
+#         x, y = rx, ry
+#         xn, yn = hull[(j+1)%n][0], hull[(j+1)%n][1]
+#         rx, ry = xn*c - yn*s, xn*s + yn*c
+#         if mx*rx + my*ry >= best:
+#             j = (j+1)%n
+#             best = mx*rx + my*ry
+#         else:
+#             return (x, y, j)
+#
+# n = len(hull)
+# iL = iR = iP = 1                # indexes left, right, opposite
+# pi = 4*math.atan(1)
+# minRect = (1e33, 0, 0, 0, 0, 0, 0) # area, dx, dy, i, iL, iP, iR
+# for i in range(n-1):
+#     dx = hull[i+1][0] - hull[i][0]
+#     dy = hull[i+1][1] - hull[i][1]
+#     theta = pi-math.atan2(dy, dx)
+#     s, c = math.sin(theta), math.cos(theta)
+#     yC = hull[i][0]*s + hull[i][1]*c
+#
+#     xP, yP, iP = mostfar(iP, n, s, c, 0, 1)
+#     if i==0: iR = iP
+#     xR, yR, iR = mostfar(iR, n, s, c,  1, 0)
+#     xL, yL, iL = mostfar(iL, n, s, c, -1, 0)
+#     area = (yP-yC)*(xR-xL)
+#     if area < minRect[0]:
+#         minRect = (area, xR - xL, yP - yC, i, iL, iP, iR)
+#     print ('    {:2d} {:2d} {:2d} {:2d} {:9.3f}'.format(i, iL, iP, iR, area))
+#
+# print ('Min rectangle:', minRect)
 
-from math import sqrt, cos, sin, radians, atan
+
+from math import sqrt, cos, sin, radians, atan, pi
 
 import cv2
 import numpy as np
@@ -52,8 +96,8 @@ def inRectangleUseSlope(rectPoint, xp, yp):
 #we return the new x,z
 def deletePointsFromRectangle(firstOne,x1, z1):
     size=len(x1)
-    x = []
-    z = []
+    x=[]
+    z=[]
     Cos = sqrt(2)/2 #cos(45)
     Sin = sqrt(2)/2 #sin(45)
     print(Cos,Sin)
@@ -68,6 +112,8 @@ def deletePointsFromRectangle(firstOne,x1, z1):
             x.append(x1[i])
             z.append(z1[i])
     return x,z
+
+#---------------------------------------------------------------------------------------------------------------------------
 
 def getRectangle(x1,z1):
     size = len(x1)
@@ -88,6 +134,69 @@ def getRectangle(x1,z1):
                 [midX - sumDic, midZ - sumDic]]
     return rectangle
 #---------------------------------------------------------------------------------------------------------------------------
+def getQuarterOfDoor(x, y, xCenter, yCenter):
+    size=len(x)
+    dencity1=0
+    dencity2=0
+    dencity3=0
+    dencity4=0
+
+    # we use the sum to know the center of the dencity points in each qwart
+    sum1x=0
+    sum2x=0
+    sum3x=0
+    sum4x=0
+
+    sum1y = 0
+    sum2y = 0
+    sum3y = 0
+    sum4y = 0
+
+    for i in range(size):
+        if(x[i]<=xCenter and y[i]>=yCenter):
+            sum1x +=x[i]
+            sum1y +=y[i]
+            dencity1 +=1
+        elif( x[i]>=xCenter and y[i]>=yCenter):
+            sum2x += x[i]
+            sum2y += y[i]
+            dencity2 +=1
+        elif( x[i]>=xCenter and y[i]<=yCenter):
+            sum3x += x[i]
+            sum3y += y[i]
+            dencity3+=1
+        elif (x[i] <= xCenter and y[i] <= yCenter):
+            sum4x += x[i]
+            sum4y += y[i]
+            # print(x[i],y[i])
+            dencity4+=1
+    maxDencity = max(dencity4,dencity3,dencity2,dencity1)
+    print (dencity4,dencity3,dencity2,dencity1)
+    print('-------------------------',xCenter,yCenter)
+    if(maxDencity==dencity1):
+        return 1,float(sum1x/dencity1),float(sum1y/dencity1)
+    if(maxDencity==dencity2):
+        return 2,float(sum2x/dencity2),float(sum2y/dencity2)
+    if(maxDencity==dencity3):
+        return 3,float(sum3x/dencity3),float(sum3y/dencity3)
+    if(maxDencity==dencity4):
+        return 4,float(sum4x/dencity4),float(sum4y/dencity4)
+
+#---------------------------------------------------------------------------------------------------------------------------
+
+def getDegreeRotation(xDirection,yDirection,xCenter,yCenter):
+
+    lenA = sqrt( (xCenter-xDirection)**2 + (yCenter-yDirection)**2)
+    lenB = abs(yDirection-yCenter)
+
+    arctang = atan((float)(lenB)/(float)(lenA))
+    # degree = radians(arctang)
+    degree = (arctang)*180/pi
+    return degree
+
+
+
+#---------------------------------------------------------------------------------------------------------------------------
 # rotataion matrix:
 # cos   sin
 # -sin  cos
@@ -95,17 +204,30 @@ def getRectangle(x1,z1):
 
 #the files name that we work with
 # x1,y,z1,a,b,c,d =np.loadtxt('/home/wajeeh/Downloads/pointData0.csv',unpack=True,delimiter=',')
-# x1,y,z1=np.loadtxt('/home/wajeeh/pointDataImproved/pointData305.csv',unpack=True,delimiter=',')
+x1,y,z1=np.loadtxt('/home/wajeeh/pointDataImproved/pointData305.csv',unpack=True,delimiter=',')
 # x1,y,z1 =np.loadtxt('/home/wajeeh/pointDataImproved/pointData205.csv',unpack=True,delimiter=',')
-x1,y,z1=np.loadtxt('/home/wajeeh/pointData.csv',unpack=True,delimiter=',')
+# x1,y,z1=np.loadtxt('/home/wajeeh/pointData.csv',unpack=True,delimiter=',')
+
 
 rectangle =getRectangle(x1,z1)
-
+size=len(x1)
+midX = float(sum(x1)) / float(size)
+midZ = float(sum(z1)) / float(size)
 x,z=deletePointsFromRectangle(rectangle,x1, z1)
 # x,z=deletePointsFromRectangle(x,z)
 
+quarter,centerx,centery = getQuarterOfDoor(x, z, midX, midZ)
+
+degree = getDegreeRotation(centerx,centery,midX,midZ)
+print(degree,'degreeee + quarter ',quarter)
+# quarter 1 => rotate left by degree
+# quarter 2 => rotate right by degree
+# quatret 3 => rotate right by 180 - degree
+# quatret 4 => rotate left by 180 - degree
 fig=plt.figure()
 plt.plot(x,z,'o',color='black')
+plt.plot(midX,midZ,'o',color='red')
+plt.plot(centerx,centery,'o',color='red')
 plt.title('chart')
 plt.ylabel('Y axis')
 plt.xlabel('X axis')
