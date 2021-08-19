@@ -1,54 +1,8 @@
-# import math
-# import  numpy as np
-# x,y,z =np.loadtxt('/home/wajeeh/pointData.csv',unpack=True,delimiter=',')
-# # print( type(x))
-# # print( len(x))
-# hull=np.column_stack((x,z))
-#
-#
-# def mostfar(j, n, s, c, mx, my): # advance j to extreme point
-#     xn, yn = hull[j][0], hull[j][1]
-#     rx, ry = xn*c - yn*s, xn*s + yn*c
-#     best = mx*rx + my*ry
-#     while True:
-#         x, y = rx, ry
-#         xn, yn = hull[(j+1)%n][0], hull[(j+1)%n][1]
-#         rx, ry = xn*c - yn*s, xn*s + yn*c
-#         if mx*rx + my*ry >= best:
-#             j = (j+1)%n
-#             best = mx*rx + my*ry
-#         else:
-#             return (x, y, j)
-#
-# n = len(hull)
-# iL = iR = iP = 1                # indexes left, right, opposite
-# pi = 4*math.atan(1)
-# minRect = (1e33, 0, 0, 0, 0, 0, 0) # area, dx, dy, i, iL, iP, iR
-# for i in range(n-1):
-#     dx = hull[i+1][0] - hull[i][0]
-#     dy = hull[i+1][1] - hull[i][1]
-#     theta = pi-math.atan2(dy, dx)
-#     s, c = math.sin(theta), math.cos(theta)
-#     yC = hull[i][0]*s + hull[i][1]*c
-#
-#     xP, yP, iP = mostfar(iP, n, s, c, 0, 1)
-#     if i==0: iR = iP
-#     xR, yR, iR = mostfar(iR, n, s, c,  1, 0)
-#     xL, yL, iL = mostfar(iL, n, s, c, -1, 0)
-#     area = (yP-yC)*(xR-xL)
-#     if area < minRect[0]:
-#         minRect = (area, xR - xL, yP - yC, i, iL, iP, iR)
-#     print ('    {:2d} {:2d} {:2d} {:2d} {:9.3f}'.format(i, iL, iP, iR, area))
-#
-# print ('Min rectangle:', minRect)
-
-
 from math import sqrt, cos, sin, radians, atan, pi
-
-import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-import matplotlib.patches as mpatches
+
+
 
 def inRectangle(rectPoint,xp,yp):
     tr=rectPoint[1]
@@ -192,7 +146,7 @@ def getDegreeRotation(xDirection,yDirection,xCenter,yCenter):
     arctang = atan((float)(lenB)/(float)(lenA))
     # degree = radians(arctang)
     degree = (arctang)*180/pi
-    return degree
+    return (int)(degree)
 
 
 
@@ -204,7 +158,7 @@ def getDegreeRotation(xDirection,yDirection,xCenter,yCenter):
 
 #the files name that we work with
 # x1,y,z1,a,b,c,d =np.loadtxt('/home/wajeeh/Downloads/pointData0.csv',unpack=True,delimiter=',')
-x1,y,z1=np.loadtxt('/home/wajeeh/pointDataImproved/pointData305.csv',unpack=True,delimiter=',')
+x1,y,z1=np.loadtxt('/home/wajeeh/pointData.csv',unpack=True,delimiter=',')
 # x1,y,z1 =np.loadtxt('/home/wajeeh/pointDataImproved/pointData205.csv',unpack=True,delimiter=',')
 # x1,y,z1=np.loadtxt('/home/wajeeh/pointData.csv',unpack=True,delimiter=',')
 
