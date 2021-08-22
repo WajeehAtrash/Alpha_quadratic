@@ -11,6 +11,7 @@ def run_slam():
 TelloDrone=tello.Tello()
 TelloDrone.connect()
 print("Drone Battery:",TelloDrone.get_battery())
+print("yaw degree",TelloDrone.get_yaw())
 #turning the drone camera on
 TelloDrone.streamoff()
 TelloDrone.streamon()
@@ -26,7 +27,7 @@ sleep(3)
 # TelloDrone.move_back(20)
 # sleep(5)
 # TelloDrone.move_forward(20)
-for i in range(19):
+for i in range(18):
     TelloDrone.rotate_clockwise(20)
     sleep(3)
     TelloDrone.move_up(20)
