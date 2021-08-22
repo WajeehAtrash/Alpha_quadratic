@@ -11,6 +11,7 @@ def run_slam():
 TelloDrone=tello.Tello()
 TelloDrone.connect()
 print("Drone Battery:",TelloDrone.get_battery())
+print("yaw degree",TelloDrone.get_yaw())
 #turning the drone camera on
 TelloDrone.streamoff()
 TelloDrone.streamon()
