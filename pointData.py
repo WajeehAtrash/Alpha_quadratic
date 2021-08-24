@@ -157,7 +157,7 @@ def getDegreeRotationV2(xDirection, yDirection, xCenter, yCenter):
     slope = yDirection / xDirection
     print('slope', slope)
     radian = atan(slope)
-    return (int)(radian * 180 / pi)
+    return abs((int)(radian * 180 / pi))
 
 
 # ---------------------------------------------------------------------------------------------------------------------------
@@ -165,7 +165,7 @@ def getAproxDist(xDirection, yDirection):
     arr = []
     plotdist = sqrt((xDirection) ** 2 + (yDirection) ** 2)
     print(f"plotdistance {plotdist}")
-    realdist = (int)(plotdist * 135)
+    realdist = (int)(plotdist * 160)
     print(f" real distance {realdist} cm")
     last = realdist % 500
     arrLen = math.floor(realdist / 500)
