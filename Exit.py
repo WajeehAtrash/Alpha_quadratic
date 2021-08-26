@@ -7,14 +7,15 @@ import math
 
 
 
-
+# moving the drone by the approximated value that we calculated
 def moveToDoor(centerx,centery):
     _,arr=pointData.getAproxDist(centerx,centery)
     for i in range(len(arr)):
         TelloDrone.move_forward(arr[i])
         sleep(2)
 
-
+#------------------------------------------------------------------------------------------------------
+#this function gets  the needed data from the csv file and and do the calculations using the pointData script functions
 def exit_door(land_deg):
     x1, y, z1 = np.loadtxt('/home/wajeeh/pointData.csv', unpack=True, delimiter=',')
     rectangle = pointData.getRectangle(x1, z1)
@@ -28,16 +29,17 @@ def exit_door(land_deg):
 
     degree = pointData.getDegreeRotation(centerx, centery, midX, midZ)
     print(degree, 'degreeee + quarter ', quarter)
-    try:
+    try:# trying to connect to the drone ( if we lost connection)
         TelloDrone.connect()
         exit_help(land_deg, degree, centerx, centery, quarter)
     except:
         exit_help(land_deg, degree, centerx, centery, quarter)
 
 #----------------------------------------------------------------------------
+#help function to make the  drone face the door
 def exit_help(land_deg,degree,centerx,centery,quarter):
     print("Drone Battery:", TelloDrone.get_battery())
-    # degree=degree-15
+    # degree=degree-15/home/wajeeh
     # TelloDrone.get_yaw()
     TelloDrone.send_rc_control(0, 0, 0, 0)
     print('YAW degree:', land_deg)
@@ -56,65 +58,3 @@ def exit_help(land_deg,degree,centerx,centery,quarter):
     else:
         TelloDrone.rotate_counter_clockwise(180-degree)
         moveToDoor(centerx, centery)
-
-    # if (quarter == 1):
-    #     if (land_deg < 0):
-    #         TelloDrone.rotate_counter_clockwise(-degree - land_deg)
-    #     else:
-    #         TelloDrone.rotate_counter_clockwise(land_deg)
-    #         TelloDrone.rotate_clockwise(-degree)
-    #     moveToDoor(centerx, centery)
-    # if (quarter == 2):
-    #     if (land_deg < 0):
-    #         TelloDrone.rotate_clockwise(180 - land_deg - degree)
-    #     else:
-    #         TelloDrone.rotate_clockwise(180 - degree - land_deg)
-    #     moveToDoor(centerx, centery)
-    # if (quarter == 3):
-    #     if (land_deg < 0):
-    #         TelloDrone.rotate_counter_clockwise(180 + land_deg + degree)
-    #     else:
-    #         TelloDrone.rotate_counter_clockwise(180 - land_deg - degree)
-    #     moveToDoor(centerx, centery)
-    # if (quarter == 4):
-    #     if (land_deg < 0):
-    #         TelloDrone.rotate_counter_clockwise(-land_deg)
-    #         TelloDrone.rotate_clockwise(degree)
-    #     else:
-    #         TelloDrone.rotate_counter_clockwise(180 - land_deg - degree)
-    #     moveToDoor(centerx, centery)
-
-
-
-
-
-
-
-# if (quarter == 1):
- #        if (land_deg < 0):
- #            TelloDrone.rotate_clockwise(-degree - land_deg)
- #        else:
- #            TelloDrone.rotate_counter_clockwise(land_deg)
- #            TelloDrone.rotate_clockwise(-degree)
- #        moveToDoor(centerx, centery)
- #    if (quarter == 2):
- #        if (land_deg < 0):
- #            TelloDrone.rotate_clockwise(180 - land_deg - degree)
- #        else:
- #            TelloDrone.rotate_clockwise(180 - degree - land_deg)
- #        moveToDoor(centerx, centery)
- #    if (quarter == 3):
- #        if (land_deg < 0):
- #            TelloDrone.rotate_counter_clockwise(180 + land_deg + degree)
- #        else:
- #            TelloDrone.rotate_counter_clockwise(180 - land_deg - degree)
- #        moveToDoor(centerx, centery)
- #    if (quarter == 4):
- #        if (land_deg < 0):
- #            TelloDrone.rotate_counter_clockwise(-land_deg)
- #            TelloDrone.rotate_clockwise(degree)
- #        else:
- #            TelloDrone.rotate_counter_clockwise(180 - land_deg - degree)
- #        moveToDoor(centerx, centery)
- #
- #    TelloDrone.land()
