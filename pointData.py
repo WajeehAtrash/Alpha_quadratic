@@ -91,6 +91,14 @@ def getRectangle(x1, z1):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------
+#geting the quarter that we excpect door to be in
+#             |
+#      1      |        2
+#             |
+#-------------|----------------
+#             |
+#       3     |         4
+#             |
 def getQuarterOfDoor(x, y, xCenter, yCenter):
     size = len(x)
     dencity1 = 0
@@ -98,7 +106,7 @@ def getQuarterOfDoor(x, y, xCenter, yCenter):
     dencity3 = 0
     dencity4 = 0
 
-    # we use the sum to know the center of the dencity points in each qwart
+    # we use the sum to know the center of the dencity points in each quarter
     sum1x = 0
     sum2x = 0
     sum3x = 0
@@ -141,7 +149,7 @@ def getQuarterOfDoor(x, y, xCenter, yCenter):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------
-
+#calculating the degree of the line that go through the (xDirection,yDirection)
 def getDegreeRotation(xDirection, yDirection, xCenter, yCenter):
     lenA = sqrt((xCenter - xDirection) ** 2 + (yCenter - yDirection) ** 2)
     lenB = abs(yDirection - yCenter)
@@ -153,7 +161,8 @@ def getDegreeRotation(xDirection, yDirection, xCenter, yCenter):
 
 
 # --------------------------------------------------------------------------------------------------------------------------
-def getDegreeRotationV2(xDirection, yDirection, xCenter, yCenter):
+#calculating the degree of the line that go through the (xDirection,yDirection)
+def getDegreeRotationV2(xDirection, yDirection):
     slope = yDirection / xDirection
     print('slope', slope)
     radian = atan(slope)
@@ -161,12 +170,14 @@ def getDegreeRotationV2(xDirection, yDirection, xCenter, yCenter):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------
+#calculating the approcimated distance that the drone should fly
 def getAproxDist(xDirection, yDirection):
     arr = []
     plotdist = sqrt((xDirection) ** 2 + (yDirection) ** 2)
     print(f"plotdistance {plotdist}")
     realdist = (int)(plotdist * 160)
     print(f" real distance {realdist} cm")
+    #dividing the distance into chunks (max 500 cm)
     last = realdist % 500
     arrLen = math.floor(realdist / 500)
     print(arrLen)

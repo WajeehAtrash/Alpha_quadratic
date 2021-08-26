@@ -1,13 +1,12 @@
 from djitellopy import tello
 from time import sleep
-import cv2
 import os
 import threading
 
 TelloDrone = tello.Tello()
 TelloDrone.connect()
 
-
+# function to run orb_slam in a different thread automatically
 def run_slam():
     os.chdir('/home/wajeeh/ORB_SLAM2')
     OrbSlamCom = './Examples/Monocular/mono_tum Vocabulary/ORBvoc.txt Examples/Monocular/TUM1.yaml'
