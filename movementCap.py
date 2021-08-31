@@ -28,7 +28,7 @@ def fly_cap():
     TelloDrone.send_rc_control(0, 0, 0, 0)
     sleep(1)
     TelloDrone.takeoff()
-    TelloDrone.move_up(80)
+    # TelloDrone.move_up(80)
     sleep(3)
     for i in range(19):
         TelloDrone.rotate_clockwise(20)
