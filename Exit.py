@@ -44,7 +44,7 @@ def exit_help(land_deg,degree,centerx,centery,quarter):
     TelloDrone.send_rc_control(0, 0, 0, 0)
     print('YAW degree:', land_deg)
     TelloDrone.takeoff()
-    TelloDrone.move_up(80)
+    # TelloDrone.move_up(80)
     degree=degree+land_deg-18
     if(quarter==1):
         TelloDrone.rotate_counter_clockwise(degree)

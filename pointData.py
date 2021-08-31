@@ -1,7 +1,7 @@
 import math
 from math import sqrt, cos, sin, radians, atan, pi
 import numpy as np
-from matplotlib import pyplot as plt
+import  Plot
 
 
 def inRectangle(rectPoint, xp, yp):
@@ -162,11 +162,11 @@ def getDegreeRotation(xDirection, yDirection, xCenter, yCenter):
 
 # --------------------------------------------------------------------------------------------------------------------------
 #calculating the degree of the line that go through the (xDirection,yDirection)
-def getDegreeRotationV2(xDirection, yDirection):
+def getDegreeRotationV2(xDirection, yDirection, midX, midZ):
     slope = yDirection / xDirection
     print('slope', slope)
     radian = atan(slope)
-    return abs((int)(radian * 180 / pi))
+    return (int)(radian * 180 / pi)
 
 
 # ---------------------------------------------------------------------------------------------------------------------------
@@ -198,32 +198,27 @@ def getAproxDist(xDirection, yDirection):
 
 
 # the files name that we work with
-# x1,y,z1,a,b,c,d =np.loadtxt('/home/wajeeh/Downloads/pointData0.csv',unpack=True,delimiter=',')
-x1, y, z1 = np.loadtxt('/home/wajeeh/pointData.csv', unpack=True, delimiter=',')
-# x1,y,z1 =np.loadtxt('/home/wajeeh/pointDataImproved/pointData205.csv',unpack=True,delimiter=',')
-# x1,y,z1=np.loadtxt('/home/wajeeh/pointData.csv',unpack=True,delimiter=',')
-
-
-rectangle = getRectangle(x1, z1)
-size = len(x1)
-midX = float(sum(x1)) / float(size)
-midZ = float(sum(z1)) / float(size)
-x, z = deletePointsFromRectangle(rectangle, x1, z1)
-# x,z=deletePointsFromRectangle(x,z)
-
-quarter, centerx, centery = getQuarterOfDoor(x, z, midX, midZ)
-degree = getDegreeRotation(centerx, centery, midX, midZ)
-print(degree, 'degreeee + quarter ', quarter)
-# quarter 1 => rotate left by degree
-# quarter 2 => rotate right by degree
-# quatret 3 => rotate right by 180 - degree
-# quatret 4 => rotate left by 180 - degree
-fig = plt.figure()
-plt.plot(x, z, 'o', color='black')
-plt.plot(midX, midZ, 'o', color='red')
-plt.plot(centerx, centery, 'o', color='red')
-plt.title('chart')
-plt.ylabel('Y axis')
-plt.xlabel('X axis')
-plt.show()
+#if you want to see the plots remove the comments below
+#------------------------------------------------------------------------------------------------------------
+# x1, y, z1 = np.loadtxt('/home/wajeeh/pointData.csv', unpack=True, delimiter=',')
+#
+#
+# rectangle = getRectangle(x1, z1)
+# size = len(x1)
+# midX = float(sum(x1)) / float(size)
+# midZ = float(sum(z1)) / float(size)
+# x, z = deletePointsFromRectangle(rectangle, x1, z1)
+# # x,z=deletePointsFromRectangle(x,z)
+#
+# quarter, centerx, centery = getQuarterOfDoor(x, z, midX, midZ)
+# degree = getDegreeRotationV2(centerx, centery, midX, midZ)
+# print(degree, 'degreeee + quarter ', quarter)
+# # quarter 1 => rotate left by degree
+# # quarter 2 => rotate right by degree
+# # quatret 3 => rotate right by 180 - degree
+# # quatret 4 => rotate left by 180 - degree
+#
+#
+# Plot.show_Plot(x1,z1,'before removing points')
+# Plot.show_plot_Special(x,z,[[midX,midZ],[centerx,centery]],'after removing the room points')
 # ---------------------------------------------------------------------------------------------------------------------------
